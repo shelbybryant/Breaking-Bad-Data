@@ -35,7 +35,9 @@ public class LoginController {
 			if(user == null) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {
+				System.out.println("You have logged in with the email: " + email);
 				return ResponseEntity.status(HttpStatus.OK).body(user);
+				
 			}
 		}
 	
