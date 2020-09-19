@@ -27,11 +27,11 @@ public class LoginController {
 	}
 	
 	
-	//got stuck with logging in lol
+	//this will check for specific email for the user, couldn't figure out how to check password as well
 	
-	@GetMapping(value="/login/{name}") 
-		public ResponseEntity<User> getUserByName(@PathVariable("name") String name) {
-			User user = uDao.findByScreenName(name);
+	@GetMapping(value="/login/{email}") 
+		public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
+			User user = uDao.findByEmail(email);
 			if(user == null) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {

@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Game")
+@Table(name="games")
 public class Game implements Serializable{
 
 
@@ -26,12 +26,12 @@ public class Game implements Serializable{
 	@Column(name="game_id", nullable = false)
 	private int gameId;//game id
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private int userId;
+	@JoinColumn(name="user_id_fk")
+	private User user;
 	@Column(name="score")
 	private int score;
 	@Column(name="game_submitted")
-	private Date Gameubmitted;
+	private Date gameSubmitted;
 	
 	
 	public Game() {
@@ -39,27 +39,27 @@ public class Game implements Serializable{
 	}
 
 
-	public Game(int score, Date Gameubmitted) {
+	public Game(int score, Date gameSubmitted) {
 		super();
 		this.score = score;
-		this.Gameubmitted = Gameubmitted;
+		this.gameSubmitted = gameSubmitted;
 	}
 
 
-	public Game(int userId, int score, Date Gameubmitted) {
+	public Game(User user, int score, Date gameSubmitted) {
 		super();
-		this.userId = userId;
+		this.user = user;
 		this.score = score;
-		this.Gameubmitted = Gameubmitted;
+		this.gameSubmitted = gameSubmitted;
 	}
 
 
-	public Game(int gameId, int userId, int score, Date Gameubmitted) {
+	public Game(int gameId, User user, int score, Date gameSubmitted) {
 		super();
 		this.gameId = gameId;
-		this.userId = userId;
+		this.user = user;
 		this.score = score;
-		this.Gameubmitted = Gameubmitted;
+		this.gameSubmitted = gameSubmitted;
 	}
 
 
@@ -73,13 +73,13 @@ public class Game implements Serializable{
 	}
 
 
-	public int getUserId() {
-		return userId;
+	public User getuser() {
+		return user;
 	}
 
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setuser(User user) {
+		this.user = user;
 	}
 
 
@@ -93,13 +93,13 @@ public class Game implements Serializable{
 	}
 
 
-	public Date getGameubmitted() {
-		return Gameubmitted;
+	public Date getGameSubmitted() {
+		return gameSubmitted;
 	}
 
 
-	public void setGameubmitted(Date Gameubmitted) {
-		this.Gameubmitted = Gameubmitted;
+	public void setGameSubmitted(Date gameSubmitted) {
+		this.gameSubmitted = gameSubmitted;
 	}
 
 
@@ -107,11 +107,13 @@ public class Game implements Serializable{
 		return serialVersionUID;
 	}
 
+	
+	//added user.getId() so that spring knows I want this tied to a specific user id
 
 	@Override
 	public String toString() {
-		return "Game [gameId=" + gameId + ", userId=" + userId + ", score=" + score + ", Gameubmitted="
-				+ Gameubmitted + "]";
+		return "Game [gameId=" + gameId + ", user=" + user.getUserId() + ", score=" + score + ", gameSubmitted=" + gameSubmitted
+				+ "]";
 	}
 
 
@@ -120,9 +122,9 @@ public class Game implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + gameId;
-		result = prime * result + ((Gameubmitted == null) ? 0 : Gameubmitted.hashCode());
+		result = prime * result + ((gameSubmitted == null) ? 0 : gameSubmitted.hashCode());
 		result = prime * result + score;
-		result = prime * result + userId;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -138,15 +140,23 @@ public class Game implements Serializable{
 		Game other = (Game) obj;
 		if (gameId != other.gameId)
 			return false;
-		if (Gameubmitted == null) {
-			if (other.Gameubmitted != null)
+		if (gameSubmitted == null) {
+			if (other.gameSubmitted != null)
 				return false;
-		} else if (!Gameubmitted.equals(other.Gameubmitted))
+		} else if (!gameSubmitted.equals(other.gameSubmitted))
 			return false;
 		if (score != other.score)
 			return false;
-		if (userId != other.userId)
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
+
+
+
+
+
 }

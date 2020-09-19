@@ -23,8 +23,8 @@ public class Quote implements Serializable{
 	@Column(name="quote_id")
 	private int quoteId;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private int userId;
+	@JoinColumn(name="user_id_fk")
+	private User user;
 	@Column(name="author_firstname")
 	private String authorFName;
 	@Column(name="author_lastname")
@@ -39,19 +39,27 @@ public class Quote implements Serializable{
 	}
 
 
-	public Quote(int userId, String authorFName, String authorLName, String authorQuote) {
+	public Quote(String authorFName, String authorLName, String authorQuote) {
 		super();
-		this.userId = userId;
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
 		this.authorQuote = authorQuote;
 	}
 
 
-	public Quote(int quoteId, int userId, String authorFName, String authorLName, String authorQuote) {
+	public Quote(User user, String authorFName, String authorLName, String authorQuote) {
+		super();
+		this.user = user;
+		this.authorFName = authorFName;
+		this.authorLName = authorLName;
+		this.authorQuote = authorQuote;
+	}
+
+
+	public Quote(int quoteId, User user, String authorFName, String authorLName, String authorQuote) {
 		super();
 		this.quoteId = quoteId;
-		this.userId = userId;
+		this.user = user;
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
 		this.authorQuote = authorQuote;
@@ -68,13 +76,13 @@ public class Quote implements Serializable{
 	}
 
 
-	public int getUserId() {
-		return userId;
+	public User getuser() {
+		return user;
 	}
 
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setuser(User user) {
+		this.user = user;
 	}
 
 
@@ -113,9 +121,11 @@ public class Quote implements Serializable{
 	}
 
 
+	//added user.getId() so that spring knows I want this tied to a specific user id
+	
 	@Override
 	public String toString() {
-		return "Quote [quoteId=" + quoteId + ", userId=" + userId + ", authorFName=" + authorFName + ", authorLName="
+		return "Quote [quoteId=" + quoteId + ", user=" + user.getUserId() + ", authorFName=" + authorFName + ", authorLName="
 				+ authorLName + ", authorQuote=" + authorQuote + "]";
 	}
 
@@ -128,7 +138,7 @@ public class Quote implements Serializable{
 		result = prime * result + ((authorLName == null) ? 0 : authorLName.hashCode());
 		result = prime * result + ((authorQuote == null) ? 0 : authorQuote.hashCode());
 		result = prime * result + quoteId;
-		result = prime * result + userId;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -159,10 +169,15 @@ public class Quote implements Serializable{
 			return false;
 		if (quoteId != other.quoteId)
 			return false;
-		if (userId != other.userId)
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
+
+
 
 	
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Quote;
+import com.revature.models.User;
 import com.revature.repositories.IGameDAO;
 import com.revature.repositories.IQuoteDAO;
 import com.revature.repositories.IUserDAO;
@@ -39,7 +40,7 @@ public class QuoteController {
 	
 	
 	@GetMapping(value="/{userId}")
-	public ResponseEntity<Quote> findByUser(@PathVariable("userId") int userId) {
+	public ResponseEntity<Quote> findByUser(@PathVariable("userId") User userId) {
 		Optional<Quote> q = Optional.of(qDao.findByUser(userId));
 		if(q.isPresent()) {
 			Quote quote = q.get();

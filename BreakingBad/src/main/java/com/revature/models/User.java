@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="User")
+@Table(name="users")
 public class User implements Serializable{
 
 private static final long serialVersionUID = 1L;
@@ -25,8 +25,6 @@ private static final long serialVersionUID = 1L;
 	public String email;
 	@Column(name="password")
 	public String password;
-	@Column(name="avatar")
-	public byte avatar;
 	//this is to help keep track of how many points a user has accumulated over games
 	//also for displaying top leader in leader board
 	@Column(name="running_total")
@@ -40,25 +38,22 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-	public User(int userId, String screenName, String email, String password, byte avatar, int runningTotal,
-			int gamesTotal) {
+	public User(String screenName, String email, String password, int runningTotal, int gamesTotal) {
 		super();
-		this.userId = userId;
 		this.screenName = screenName;
 		this.email = email;
 		this.password = password;
-		this.avatar = avatar;
 		this.runningTotal = runningTotal;
 		this.gamesTotal = gamesTotal;
 	}
 
 
-	public User(String screenName, String email, String password, byte avatar, int runningTotal, int gamesTotal) {
+	public User(int userId, String screenName, String email, String password, int runningTotal, int gamesTotal) {
 		super();
+		this.userId = userId;
 		this.screenName = screenName;
 		this.email = email;
 		this.password = password;
-		this.avatar = avatar;
 		this.runningTotal = runningTotal;
 		this.gamesTotal = gamesTotal;
 	}
@@ -104,16 +99,6 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-	public byte getAvatar() {
-		return avatar;
-	}
-
-
-	public void setAvatar(byte avatar) {
-		this.avatar = avatar;
-	}
-
-
 	public int getRunningTotal() {
 		return runningTotal;
 	}
@@ -140,10 +125,16 @@ private static final long serialVersionUID = 1L;
 
 
 	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", screenName=" + screenName + ", email=" + email + ", password=" + password
+				+ ", runningTotal=" + runningTotal + ", gamesTotal=" + gamesTotal + "]";
+	}
+
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + avatar;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + gamesTotal;
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -163,8 +154,6 @@ private static final long serialVersionUID = 1L;
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (avatar != other.avatar)
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -190,11 +179,6 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", screenName=" + screenName + ", email=" + email + ", password=" + password
-				+ ", avatar=" + avatar + ", runningTotal=" + runningTotal + ", gamesTotal=" + gamesTotal + "]";
-	}
 	
 	
 }
