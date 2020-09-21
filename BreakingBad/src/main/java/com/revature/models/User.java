@@ -23,7 +23,7 @@ private static final long serialVersionUID = 1L;
 	public String screenName;
 	@Column(name="email")
 	public String email;
-	@Column(name="password")
+	@Column(name="user_password")
 	public String password;
 	//this is to help keep track of how many points a user has accumulated over games
 	//also for displaying top leader in leader board

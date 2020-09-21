@@ -38,6 +38,16 @@ public class Game implements Serializable{
 		super();
 	}
 
+	
+	
+	
+	public Game(int score) {
+		super();
+		this.score = score;
+	}
+
+
+
 
 	public Game(int score, Date gameSubmitted) {
 		super();

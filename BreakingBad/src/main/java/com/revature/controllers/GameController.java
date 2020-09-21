@@ -39,7 +39,7 @@ public class GameController {
 		return ResponseEntity.status(HttpStatus.OK).body(gDao.findAll());
 	}
 	
-	@GetMapping(value="/game/{userId}")
+	@GetMapping(value="/{userId}")
 	public ResponseEntity<Game> getGameByUser(@PathVariable("userId") User userId) {
 		Optional<Game> g = Optional.of(gDao.findByUser(userId));
 		
@@ -51,17 +51,6 @@ public class GameController {
 		}
 	}
 	
-	@GetMapping(value="/{id}")
-	public ResponseEntity<Game> findById(@PathVariable("id") int id) {
-		Optional<Game> g = Optional.of(gDao.findById(id));
-		
-		if(g.isPresent()) {
-			Game game = g.get();
-			return ResponseEntity.status(HttpStatus.OK).body(game);
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-	}
 	
 	@PostMapping
 	public ResponseEntity<List<Game>> newGame(@RequestBody Game game) {
