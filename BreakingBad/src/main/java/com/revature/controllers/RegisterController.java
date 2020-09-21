@@ -30,6 +30,7 @@ public class RegisterController {
 	@PostMapping
 	public ResponseEntity<List<User>> newUser(@RequestBody User user) {
 		uDao.save(user);
+		System.out.println("User was added!");
 		return ResponseEntity.status(HttpStatus.CREATED).build(); 
 	}
 	

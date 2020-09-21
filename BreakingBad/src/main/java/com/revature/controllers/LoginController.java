@@ -29,7 +29,7 @@ public class LoginController {
 	
 	//this will check for specific email for the user, couldn't figure out how to check password as well
 	
-	@GetMapping(value="/login/{email}") 
+	@GetMapping(value="/{email}") 
 		public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
 			User user = uDao.findByEmail(email);
 			if(user == null) {
