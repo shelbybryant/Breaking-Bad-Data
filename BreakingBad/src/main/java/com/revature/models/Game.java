@@ -3,7 +3,6 @@ package com.revature.models;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Table(name="games")
 public class Game implements Serializable{
 
@@ -25,7 +31,7 @@ public class Game implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="game_id", nullable = false)
 	private int gameId;//game id
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id_fk")
 	private User user;
 	@Column(name="score")
@@ -38,15 +44,14 @@ public class Game implements Serializable{
 		super();
 	}
 
-	
-	
-	
-	public Game(int score) {
+
+
+	@Autowired
+	public Game(User user, int score) {
 		super();
+		this.user = user;
 		this.score = score;
 	}
-
-
 
 
 	public Game(int score, Date gameSubmitted) {

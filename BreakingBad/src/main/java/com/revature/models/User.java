@@ -9,7 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+@Component
 @Entity
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Table(name="users")
 public class User implements Serializable{
 
@@ -56,6 +61,11 @@ private static final long serialVersionUID = 1L;
 		this.password = password;
 		this.runningTotal = runningTotal;
 		this.gamesTotal = gamesTotal;
+	}
+	
+	public User(int user_id) {
+		super();
+		this.userId = user_id;
 	}
 
 

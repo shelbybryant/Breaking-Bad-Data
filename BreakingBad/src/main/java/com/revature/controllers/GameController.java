@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Game;
+import com.revature.models.Quote;
 import com.revature.models.User;
 import com.revature.repositories.IGameDAO;
 import com.revature.repositories.IUserDAO;
@@ -40,12 +41,11 @@ public class GameController {
 	}
 	
 	@GetMapping(value="/{userId}")
-	public ResponseEntity<Game> getGameByUser(@PathVariable("userId") User userId) {
-		Optional<Game> g = Optional.of(gDao.findByUser(userId));
-		
+	public ResponseEntity<List<Game>> findByUser(@PathVariable("userId") User userId) {
+		Optional<List<Game>> g = Optional.of(gDao.findByUser(userId));
 		if(g.isPresent()) {
-			Game game = g.get();
-			return ResponseEntity.status(HttpStatus.FOUND).body(game);
+			List<Game> games = (List<Game>) g.get();
+			return new ResponseEntity<List<Game>>(games, HttpStatus.OK);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -54,6 +54,7 @@ public class GameController {
 	
 	@PostMapping
 	public ResponseEntity<List<Game>> newGame(@RequestBody Game game) {
+		System.out.println("GAME " + game);
 		gDao.save(game);
 		return ResponseEntity.status(HttpStatus.CREATED).build(); //do not need to show all games
 	}
