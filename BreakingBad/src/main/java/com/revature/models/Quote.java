@@ -13,7 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Table(name="quotes")
 public class Quote implements Serializable{
 
@@ -22,8 +29,8 @@ public class Quote implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="quote_id")
 	private int quoteId;
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id_fk")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="user_id_fk", referencedColumnName="user_id")
 	private User user;
 	@Column(name="author_firstname")
 	private String authorFName;
@@ -32,23 +39,27 @@ public class Quote implements Serializable{
 	@Column(name="author_quote")
 	private String authorQuote;
 	
-
 	public Quote() {
 		super();
-		
+		System.out.println("\n\nQuote constructor #0..");
+	
 	}
-
 
 	public Quote(String authorFName, String authorLName, String authorQuote) {
 		super();
+		System.out.println("\n\nQuote constructor #1..");
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
 		this.authorQuote = authorQuote;
 	}
 
-
+	@Autowired
 	public Quote(User user, String authorFName, String authorLName, String authorQuote) {
 		super();
+		System.out.println("\n\nQuote constructor #2..");
+		System.out.println("user: " + user);
+		System.out.println("authorFName: " + authorFName);
+		System.out.println("authorQuote: " + authorQuote);
 		this.user = user;
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
@@ -58,6 +69,7 @@ public class Quote implements Serializable{
 
 	public Quote(int quoteId, User user, String authorFName, String authorLName, String authorQuote) {
 		super();
+		System.out.println("\n\nQuote constructor #3..");
 		this.quoteId = quoteId;
 		this.user = user;
 		this.authorFName = authorFName;
@@ -176,9 +188,6 @@ public class Quote implements Serializable{
 			return false;
 		return true;
 	}
-
-
-
 	
 
 }

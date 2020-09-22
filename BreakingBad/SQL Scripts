@@ -1,0 +1,39 @@
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE users (
+	user_id SERIAL PRIMARY KEY,
+	screen_name VARCHAR(30) UNIQUE,
+	email VARCHAR(30) UNIQUE,
+	user_password VARCHAR(30),
+	running_total INTEGER,
+	games_total INTEGER
+);
+
+DROP TABLE IF EXISTS games;
+
+CREATE TABLE games (
+	game_id SERIAL PRIMARY KEY,
+	user_id_fk INTEGER REFERENCES users(user_id),
+	score INTEGER,
+	game_submitted DATE 
+);
+
+DROP TABLE IF EXISTS quotes;
+
+CREATE TABLE quotes (
+	quote_id SERIAL PRIMARY KEY,
+	user_id_fk INTEGER REFERENCES users(user_id),
+	author_firstname VARCHAR(30),
+	author_lastname VARCHAR(30),
+	author_quote VARCHAR(100)
+);
+--put IN dummy info
+
+INSERT INTO users(user_id, screen_name, email, user_password, running_total, games_total)
+	VALUES (DEFAULT, 'shelbers', 'shelbers@gmail.com', 'password', 2, 1);
+	
+INSERT INTO games (game_id, user_id_fk, score, game_submitted)
+	VALUES (DEFAULT, 1, 2, DEFAULT);
+	
+INSERT INTO quotes(quote_id, user_id_fk, author_firstname, author_lastname, author_quote)
+	VALUES (DEFAULT, 1, 'Jesse', 'Pinkman', 'Funyuns are awesome.')

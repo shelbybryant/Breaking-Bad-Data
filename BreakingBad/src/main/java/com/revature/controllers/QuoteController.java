@@ -40,11 +40,11 @@ public class QuoteController {
 	
 	
 	@GetMapping(value="/{userId}")
-	public ResponseEntity<Quote> findByUser(@PathVariable("userId") User userId) {
-		Optional<Quote> q = Optional.of(qDao.findByUser(userId));
+	public ResponseEntity<List<Quote>> findByUser(@PathVariable("userId") User userId) {
+		Optional<List<Quote>> q = Optional.of(qDao.findByUser(userId));
 		if(q.isPresent()) {
-			Quote quote = q.get();
-			return ResponseEntity.status(HttpStatus.FOUND).body(quote);
+			List<Quote> quotes = (List<Quote>) q.get();
+			return new ResponseEntity<List<Quote>>(quotes, HttpStatus.OK);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -52,6 +52,8 @@ public class QuoteController {
 	
 	@PostMapping
 	public ResponseEntity<List<Quote>> newQuote(@RequestBody Quote quote) {
+		
+		System.out.println("QUOTE: " + quote);
 		qDao.save(quote);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
