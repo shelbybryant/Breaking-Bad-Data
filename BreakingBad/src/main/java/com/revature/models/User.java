@@ -63,6 +63,15 @@ private static final long serialVersionUID = 1L;
 		this.gamesTotal = gamesTotal;
 	}
 	
+	
+	
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+
 	public User(int user_id) {
 		super();
 		this.userId = user_id;
