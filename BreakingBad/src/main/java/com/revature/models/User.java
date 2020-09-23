@@ -23,11 +23,9 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id", nullable=false)
-	public int userId;
-	@Column(name="screen_name", unique=true)
-	public String screenName;
-	@Column(name="email")
-	public String email;
+	public long userId;
+	@Column(name="username", unique=true)
+	public String username;
 	@Column(name="user_password")
 	public String password;
 	//this is to help keep track of how many points a user has accumulated over games
@@ -43,61 +41,48 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-	public User(String screenName, String email, String password, int runningTotal, int gamesTotal) {
+	public User(String username, String password, int runningTotal, int gamesTotal) {
 		super();
-		this.screenName = screenName;
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.runningTotal = runningTotal;
 		this.gamesTotal = gamesTotal;
 	}
 
 
-	public User(int userId, String screenName, String email, String password, int runningTotal, int gamesTotal) {
+	public User(long userId, String username, String password, int runningTotal, int gamesTotal) {
 		super();
 		this.userId = userId;
-		this.screenName = screenName;
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.runningTotal = runningTotal;
 		this.gamesTotal = gamesTotal;
 	}
 	
-	public User(int user_id) {
+	public User(long user_id) {
 		super();
 		this.userId = user_id;
 	}
 
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
 
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
 
-	public String getScreenName() {
-		return screenName;
+	public String getUsername() {
+		return username;
 	}
 
 
-	public void setScreenName(String screenName) {
-		this.screenName = screenName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 
 	public String getPassword() {
 		return password;
@@ -136,7 +121,7 @@ private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", screenName=" + screenName + ", email=" + email + ", password=" + password
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password
 				+ ", runningTotal=" + runningTotal + ", gamesTotal=" + gamesTotal + "]";
 	}
 
@@ -145,12 +130,11 @@ private static final long serialVersionUID = 1L;
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + gamesTotal;
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + runningTotal;
-		result = prime * result + ((screenName == null) ? 0 : screenName.hashCode());
-		result = prime * result + userId;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + (int) (userId ^ (userId >>> 32));
 		return result;
 	}
 
@@ -164,11 +148,6 @@ private static final long serialVersionUID = 1L;
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
 		if (gamesTotal != other.gamesTotal)
 			return false;
 		if (password == null) {
@@ -178,15 +157,18 @@ private static final long serialVersionUID = 1L;
 			return false;
 		if (runningTotal != other.runningTotal)
 			return false;
-		if (screenName == null) {
-			if (other.screenName != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!screenName.equals(other.screenName))
+		} else if (!username.equals(other.username))
 			return false;
 		if (userId != other.userId)
 			return false;
 		return true;
 	}
+
+
+	
 
 
 	
