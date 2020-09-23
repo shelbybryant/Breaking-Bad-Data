@@ -1,4 +1,4 @@
-package com.revature.jwtrepositories;
+package com.revature.repositories;
 
 import java.util.Optional;
 
@@ -11,4 +11,5 @@ import com.revature.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findById(long uId);
 	Optional<User> findByUsername(String username);
+	boolean existsByUsername(String username);
 }

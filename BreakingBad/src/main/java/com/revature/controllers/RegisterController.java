@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.User;
-import com.revature.repositories.IUserDAO;
+import com.revature.repositories.UserRepository;
 
 @RestController
 @RequestMapping(value="/register")
 @CrossOrigin
 public class RegisterController {
 
-	private IUserDAO uDao;
+	private UserRepository uDao;
 
 	@Autowired
-	public RegisterController(IUserDAO uDao) {
+	public RegisterController(UserRepository uDao) {
 		super();
 		this.uDao = uDao;
 	}

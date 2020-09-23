@@ -13,32 +13,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.revature.models.User;
-import com.revature.repositories.IUserDAO;
+import com.revature.repositories.UserRepository;
 
 @RestController
 @RequestMapping(value="/user")
 @CrossOrigin
 public class UserController {
 
-	private IUserDAO uDao;
+	private UserRepository uDao;
 
 	@Autowired
-	public UserController(IUserDAO uDao) {
+	public UserController(UserRepository uDao) {
 		super();
 		this.uDao = uDao;
 	}
 	
 	@GetMapping(value="/{userId}")
-	public ResponseEntity<User> findById(@PathVariable("userId") int userId) {
-		Optional<User> u = Optional.of(uDao.findById(userId));
+	public ResponseEntity<Optional<User>> findById(@PathVariable("userId") int userId) {
+		Optional<Optional<User>> u = Optional.of(uDao.findById(userId));
 		
 		if(u.isPresent()) {
-			User user = u.get();
+			Optional<User> user = u.get();
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
-	
 	
 }

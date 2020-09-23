@@ -1,4 +1,4 @@
-package com.revature.jwtrepositories;
+package com.revature.repositories;
 
 import java.util.List;
 

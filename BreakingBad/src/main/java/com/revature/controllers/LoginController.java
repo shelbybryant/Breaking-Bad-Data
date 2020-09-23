@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.User;
-import com.revature.repositories.IUserDAO;
+import com.revature.repositories.UserRepository;
 
 @RestController
 @RequestMapping(value="/login")
 @CrossOrigin
 public class LoginController {
 
-	private IUserDAO uDao;
+	private UserRepository uDao;
 //	private LoginDTO ld;
 
 	@Autowired
-	public LoginController(IUserDAO uDao) {
+	public LoginController(UserRepository uDao) {
 		super();
 		this.uDao = uDao;
 	}
@@ -29,9 +31,9 @@ public class LoginController {
 	
 	//this will check for specific email for the user, couldn't figure out how to check password as well
 	
-	@GetMapping(value="/{email}") 
-		public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
-			User user = uDao.findByEmail(email);
+	@GetMapping(value="/{username}") 
+		public ResponseEntity<Optional<User>> getUserByUsername(@PathVariable("username") String email) {
+			Optional<User> user = uDao.findByUsername(email);
 			if(user == null) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {

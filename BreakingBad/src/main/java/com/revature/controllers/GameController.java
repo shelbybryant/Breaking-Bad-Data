@@ -17,19 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.models.Game;
 import com.revature.models.Quote;
 import com.revature.models.User;
-import com.revature.repositories.IGameDAO;
-import com.revature.repositories.IUserDAO;
+import com.revature.repositories.GameRepository;
+import com.revature.repositories.UserRepository;
+
 
 @RestController
 @RequestMapping(value="/game")
 @CrossOrigin
 public class GameController {
 
-	private IUserDAO uDao;
-	private IGameDAO gDao;
+	private UserRepository uDao;
+	private GameRepository gDao;
 	
 	@Autowired
-	public GameController(IUserDAO uDao, IGameDAO gDao) {
+	public GameController(UserRepository uDao, GameRepository gDao) {
 		super();
 		this.uDao = uDao;
 		this.gDao = gDao;

@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Quote;
 import com.revature.models.User;
-import com.revature.repositories.IGameDAO;
-import com.revature.repositories.IQuoteDAO;
-import com.revature.repositories.IUserDAO;
+import com.revature.repositories.GameRepository;
+import com.revature.repositories.QuoteRepository;
+import com.revature.repositories.UserRepository;
 
 @RestController
 @RequestMapping(value="/quote")
 @CrossOrigin
 public class QuoteController {
 
-	IUserDAO uDao;
-	IQuoteDAO qDao;
-	IGameDAO gDao;
+	UserRepository uDao;
+	QuoteRepository qDao;
+	GameRepository gDao;
 	
 	@Autowired
-	public QuoteController(IUserDAO uDao, IQuoteDAO qDao, IGameDAO gDao) {
+	public QuoteController(UserRepository uDao, QuoteRepository qDao, GameRepository gDao) {
 		super();
 		this.uDao = uDao;
 		this.qDao = qDao;

@@ -1,4 +1,4 @@
-package com.revature.jwtsecurity;
+package com.revature.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.revature.jwtservices.UserDetailsServiceDAO;
+import com.revature.securityjwt.AuthEntryPointJwt;
+import com.revature.securityjwt.AuthTokenFilter;
+import com.revature.servicesjwt.ImpUDService;
 
 
 @Configuration
@@ -25,7 +27,7 @@ import com.revature.jwtservices.UserDetailsServiceDAO;
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	UserDetailsServiceDAO uds;
+	ImpUDService uds;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
@@ -36,8 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(uds).passwordEncoder(passwordEncoder());
+	public void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
+		authManagerBuilder.userDetailsService(uds).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean

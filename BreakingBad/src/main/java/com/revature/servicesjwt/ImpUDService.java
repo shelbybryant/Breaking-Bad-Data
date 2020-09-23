@@ -4,28 +4,30 @@
  * then it builds a UserDetailsDAO object using static build() method.
  */
 
-package com.revature.jwtservices;
+package com.revature.servicesjwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.jwtrepositories.UserRepository;
 import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 
 @Service
-public class UserDetailsServiceDAO implements IUserDetailsService {
+public class ImpUDService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 
 	@Override
 	@Transactional
-	public UserDetailsDAO loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-		return UserDetailsDAO.build(user);
+		return ImpsUDetails.build(user);
 	}
 
 }

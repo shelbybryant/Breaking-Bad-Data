@@ -8,7 +8,7 @@
  * It indicates that the request requires HTTP authentication.
  */
 
-package com.revature.jwtsecurity;
+package com.revature.securityjwt;
 
 import java.io.IOException;
 

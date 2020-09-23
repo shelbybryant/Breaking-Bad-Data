@@ -18,7 +18,7 @@
  *     userDetails.getPassword()
  */
 
-package com.revature.jwtsecurity;
+package com.revature.securityjwt;
 
 import java.io.IOException;
 
@@ -35,15 +35,14 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.revature.jwtservices.IUserDetailsDAO;
-import com.revature.jwtservices.UserDetailsServiceDAO;
+import com.revature.servicesjwt.ImpUDService;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
 
 	@Autowired
-	private UserDetailsServiceDAO userDetailsService;
+	private ImpUDService userDetailsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -51,11 +50,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		try {
 			String jwt = parseJwt(request);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-				String email = jwtUtils.getUserNameFromJwtToken(jwt);
+				String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-				IUserDetailsDAO userDetails = userDetailsService.loadUserByEmail(email);
+				UserDetails uDetails = userDetailsService.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-						userDetails, null);
+						uDetails, null);
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
