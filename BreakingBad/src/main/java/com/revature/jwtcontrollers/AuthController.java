@@ -40,8 +40,6 @@ import com.revature.servicesjwt.ImpsUDetails;
 @RestController
 @RequestMapping("/bb/auth")
 public class AuthController {
-	LoginRequest loginRequest;
-	RegisterRequest registerRequest;
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -56,7 +54,7 @@ public class AuthController {
 	JwtUtils jwtUtils;
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@Value @RequestBody loginRequest) {
+	public ResponseEntity<?> authenticateUser(@Value(value = "LoginRequest loginRequest") @RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -73,23 +71,23 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@Value @RequestBody registerRequest) {
+	public ResponseEntity<?> registerUser(@Value(value = "RegisterRequest registerRequest") @RequestBody RegisterRequest registerRequest) {
 		if (userRepository.existsByUsername(registerRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
+			return ResponseEntity.badRequest()
 					.body(new MsgResponse("Error: Username is taken"));
 		}
 
 		if (userRepository.existsByUsername(registerRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MsgResponse("Error: Oops. SOmething went wrong."));
+			return ResponseEntity.badRequest()
+					.body(new MsgResponse("Error: Oops. Something went wrong."));
 		}
 
 		// Create new user's account
 		User user = new User(registerRequest.getUsername(), 
 							 encoder.encode(registerRequest.getPassword()),
-							 0,0);
+						     0,0);
+		userRepository.save(user);	
+		return ResponseEntity.ok(new MsgResponse("New User sucessfully registered."));
 	}
 }
 
