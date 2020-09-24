@@ -10,5 +10,6 @@ import com.revature.models.User;
 public interface IQuoteDAO extends JpaRepository<Quote, Integer> {
 
 	List<Quote> findByUser (User userId);
+	Quote deleteByQId(int qId);
 	
 }

@@ -4,6 +4,8 @@ package com.revature.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +59,17 @@ public class QuoteController {
 		qDao.save(quote);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+	
+	/*
+	@Transactional
+	@PostMapping
+	public ResponseEntity<Quote> deleteQuote(@RequestBody Quote quote) {
+		
+		System.out.println("QUOTE: " + quote);
+		qDao.deleteByQId(quote.getQuoteId());
+		System.out.println("QUOTE: " + quote);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	*/
 	
 }
