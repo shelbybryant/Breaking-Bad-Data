@@ -39,6 +39,8 @@ public class Quote implements Serializable{
 	@Column(name="author_quote")
 	private String authorQuote;
 	
+
+	
 	public Quote() {
 		super();
 		System.out.println("\n\nQuote constructor #0..");
@@ -77,6 +79,8 @@ public class Quote implements Serializable{
 		this.authorQuote = authorQuote;
 	}
 
+	
+	
 
 	public int getQuoteId() {
 		return quoteId;

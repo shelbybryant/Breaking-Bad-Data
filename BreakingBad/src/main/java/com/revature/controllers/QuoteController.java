@@ -38,17 +38,33 @@ public class QuoteController {
 		this.gDao = gDao;
 	}
 	
+
+//	@GetMapping(value="/{userId}")
+//	public ResponseEntity<List<Quote>> findByUser(@PathVariable("userId") String userId) {
+//		System.out.println("userID:" + userId);
+//		Optional<List<Quote>> q = Optional.of(qDao.findByUser(userId));
+//		if(q.isPresent()) {
+//			List<Quote> quotes = (List<Quote>) q.get();
+//			return new ResponseEntity<List<Quote>>(quotes, HttpStatus.OK);
+//		} else {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//		}
+//	}
 	
 	@GetMapping(value="/{userId}")
-	public ResponseEntity<List<Quote>> findByUser(@PathVariable("userId") User userId) {
-		Optional<List<Quote>> q = Optional.of(qDao.findByUser(userId));
-		if(q.isPresent()) {
-			List<Quote> quotes = (List<Quote>) q.get();
+	public ResponseEntity<List<Quote>> findQuote(@PathVariable("userId") String userId) {
+		 User databaseUser = uDao.findById(Integer.parseInt(userId));
+		System.out.println("database user: " + databaseUser);
+		Optional<List<Quote>> databaseQuote = Optional.of(qDao.findByUser(databaseUser));
+		if (databaseQuote.isPresent()) {
+			List<Quote> quotes = databaseQuote.get();
 			return new ResponseEntity<List<Quote>>(quotes, HttpStatus.OK);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		
 	}
+	
 	
 	@PostMapping
 	public ResponseEntity<List<Quote>> newQuote(@RequestBody Quote quote) {
