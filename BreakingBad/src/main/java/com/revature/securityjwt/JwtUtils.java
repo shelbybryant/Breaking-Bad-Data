@@ -23,10 +23,10 @@ import io.jsonwebtoken.*;
 public class JwtUtils {
 	//private static final Logger logger = (JwtUtils.class);
 
-	@Value("")
+	@Value(value = "123456789101")
 	private String jwtSecret;
 
-	@Value("")
+	@Value("10000000")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {

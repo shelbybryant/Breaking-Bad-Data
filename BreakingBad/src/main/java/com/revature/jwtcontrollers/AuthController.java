@@ -36,7 +36,7 @@ import com.revature.repositories.UserRepository;
 import com.revature.securityjwt.JwtUtils;
 import com.revature.servicesjwt.ImpsUDetails;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/bb/auth")
 public class AuthController {
