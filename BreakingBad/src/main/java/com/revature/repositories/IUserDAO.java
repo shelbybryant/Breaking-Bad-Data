@@ -7,8 +7,7 @@ import com.revature.models.User;
 public interface IUserDAO extends JpaRepository<User, Integer> {
 
 	User findById (int userId);
-	User findByEmail (String email);
-	User findByScreenName(String name);
+	User findByUsername(String name);
 	
 	
 }

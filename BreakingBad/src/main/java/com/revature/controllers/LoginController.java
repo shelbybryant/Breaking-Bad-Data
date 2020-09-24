@@ -30,12 +30,12 @@ public class LoginController {
 	//this will check for specific email for the user, couldn't figure out how to check password as well
 	
 	@GetMapping(value="/{email}") 
-		public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
-			User user = uDao.findByEmail(email);
+		public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
+			User user = uDao.findByUsername(username);
 			if(user == null) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			} else {
-				System.out.println("You have logged in with the email: " + email);
+				System.out.println("You have logged in with the username: " + username);
 				return ResponseEntity.status(HttpStatus.OK).body(user);
 				
 			}
