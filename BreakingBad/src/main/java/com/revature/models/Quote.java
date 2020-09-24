@@ -37,7 +37,7 @@ public class Quote implements Serializable{
 	@Column(name="author_lastname")
 	private String authorLName;
 	@Column(name="author_quote")
-	private String authorQuote;
+	private String quote;
 	
 
 	
@@ -47,36 +47,36 @@ public class Quote implements Serializable{
 	
 	}
 
-	public Quote(String authorFName, String authorLName, String authorQuote) {
+	public Quote(String authorFName, String authorLName, String quote) {
 		super();
 		System.out.println("\n\nQuote constructor #1..");
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
-		this.authorQuote = authorQuote;
+		this.quote = quote;
 	}
 
 	@Autowired
-	public Quote(User user, String authorFName, String authorLName, String authorQuote) {
+	public Quote(User user, String authorFName, String authorLName, String quote) {
 		super();
 		System.out.println("\n\nQuote constructor #2..");
 		System.out.println("user: " + user);
 		System.out.println("authorFName: " + authorFName);
-		System.out.println("authorQuote: " + authorQuote);
+		System.out.println("quote: " + quote);
 		this.user = user;
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
-		this.authorQuote = authorQuote;
+		this.quote = quote;
 	}
 
 
-	public Quote(int quoteId, User user, String authorFName, String authorLName, String authorQuote) {
+	public Quote(int quoteId, User user, String authorFName, String authorLName, String quote) {
 		super();
 		System.out.println("\n\nQuote constructor #3..");
 		this.quoteId = quoteId;
 		this.user = user;
 		this.authorFName = authorFName;
 		this.authorLName = authorLName;
-		this.authorQuote = authorQuote;
+		this.quote = quote;
 	}
 
 	
@@ -96,11 +96,9 @@ public class Quote implements Serializable{
 		return user;
 	}
 
-
 	public void setuser(User user) {
 		this.user = user;
 	}
-
 
 	public String getAuthorFName() {
 		return authorFName;
@@ -122,15 +120,13 @@ public class Quote implements Serializable{
 	}
 
 
-	public String getAuthorQuote() {
-		return authorQuote;
+	public String getQuote() {
+		return quote;
 	}
 
-
-	public void setAuthorQuote(String authorQuote) {
-		this.authorQuote = authorQuote;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -142,7 +138,7 @@ public class Quote implements Serializable{
 	@Override
 	public String toString() {
 		return "Quote [quoteId=" + quoteId + ", user=" + user.getUserId() + ", authorFName=" + authorFName + ", authorLName="
-				+ authorLName + ", authorQuote=" + authorQuote + "]";
+				+ authorLName + ", quote=" + quote + "]";
 	}
 
 
@@ -152,7 +148,7 @@ public class Quote implements Serializable{
 		int result = 1;
 		result = prime * result + ((authorFName == null) ? 0 : authorFName.hashCode());
 		result = prime * result + ((authorLName == null) ? 0 : authorLName.hashCode());
-		result = prime * result + ((authorQuote == null) ? 0 : authorQuote.hashCode());
+		result = prime * result + ((quote == null) ? 0 : quote.hashCode());
 		result = prime * result + quoteId;
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
@@ -178,10 +174,10 @@ public class Quote implements Serializable{
 				return false;
 		} else if (!authorLName.equals(other.authorLName))
 			return false;
-		if (authorQuote == null) {
-			if (other.authorQuote != null)
+		if (quote == null) {
+			if (other.quote != null)
 				return false;
-		} else if (!authorQuote.equals(other.authorQuote))
+		} else if (!quote.equals(other.quote))
 			return false;
 		if (quoteId != other.quoteId)
 			return false;
